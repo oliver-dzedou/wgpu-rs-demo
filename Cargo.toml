@@ -1,0 +1,25 @@
+[package]
+name = "exlib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+winit = { version = "0.30.9", features = ["rwh_05"] }
+wgpu = "25.0.0"
+pollster = "0.4.0"
+bytemuck = { version = "1.22", features = [ "derive" ]}
+rand = "0.9.0"
+chrono = "0.4.40"
+colored = "3.0.0"
+bitcode = "0.6.6"
+kira = "0.10.5"
+env_logger = "0.11.8"
+image = { version = "0.25.6", features = ["png", "jpeg"] }
+mimalloc = "0.1.46"
+smol_str = "0.3.2"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+strip = "debuginfo"
+lto = "fat"
