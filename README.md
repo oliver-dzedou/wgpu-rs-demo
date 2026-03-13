@@ -1,6 +1,6 @@
 # wgpu-rs-demo 
 
-This is a demo/proof of concept of a Rust game engine based on WebGPU.
+This is a demo/proof of concept of a Rust game engine based on WebGPU
 
 ## Features
 
@@ -8,6 +8,5 @@ This is a demo/proof of concept of a Rust game engine based on WebGPU.
 - [x] Triangle rendering
 - [x] Input handling
 - [x] Audio
-- [x] Integrated logging
-- [x] Save manager
+- [x] Logging
 

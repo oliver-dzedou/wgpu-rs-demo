@@ -4,7 +4,7 @@
 
 use bitcode::{Decode, Encode};
 use rand::Rng;
-use exlib::*;
+use wgpu_rs_demo::*;
 use core::fmt;
 use std::{
     path::{Path, PathBuf},
@@ -30,24 +30,12 @@ impl MyWorld {
     }
 }
 
-impl Node for MyWorld {
-    fn init(
-        &mut self,
-        graphics: &mut Graphics,
-        sound: &mut Sound,
-        save_manager: &mut SaveManager,
-        logger: &mut Logger,
-    ) {
+impl Game for MyWorld {
+    fn init(&mut self, graphics: &mut Graphics, sound: &mut Sound, logger: &mut Logger) {
         logger.set_log_level(LogLevel::INFO);
     }
 
-    fn update(
-        &mut self,
-        graphics: &mut Graphics,
-        sound: &mut Sound,
-        save_manager: &mut SaveManager,
-        logger: &mut Logger,
-    ) {
+    fn update(&mut self, graphics: &mut Graphics, sound: &mut Sound, logger: &mut Logger) {
         graphics.draw_triangle(self.triangle_positions, self.triangle_color)
     }
 
@@ -55,7 +43,6 @@ impl Node for MyWorld {
         &mut self,
         graphics: &mut Graphics,
         sound: &mut Sound,
-        save_manager: &mut SaveManager,
         logger: &mut Logger,
         event: MouseEvent,
     ) {
@@ -65,7 +52,6 @@ impl Node for MyWorld {
         &mut self,
         graphics: &mut Graphics,
         sound: &mut Sound,
-        save_manager: &mut SaveManager,
         logger: &mut Logger,
         event: KeyEvent,
     ) {
@@ -79,12 +65,12 @@ impl Node for MyWorld {
 }
 
 fn main() {
-    let node = MyWorld::new();
-    let mut core = Core::new(node);
-    core.resizable = false;
-    core.decorations = true;
-    core.window_title = String::from("Hello, World!");
-    core.window_size = Size::new(1920, 1080);
-    core.vsync = VSync::On;
-    core.start()
+    let game = MyWorld::new();
+    let mut engine = Engine::new(game);
+    engine.resizable = false;
+    engine.decorations = true;
+    engine.window_title = String::from("Hello, World!");
+    engine.window_size = Size::new(1920, 1080);
+    engine.vsync = VSync::On;
+    engine.start()
 }

@@ -785,25 +785,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "exlib"
-version = "0.1.0"
-dependencies = [
- "bitcode",
- "bytemuck",
- "chrono",
- "colored",
- "env_logger",
- "image",
- "kira",
- "mimalloc",
- "pollster",
- "rand 0.9.1",
- "smol_str 0.3.2",
- "wgpu",
- "winit",
-]
-
-[[package]]
 name = "exr"
 version = "1.73.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3256,6 +3237,25 @@ dependencies = [
  "wgpu-types",
  "windows 0.58.0",
  "windows-core 0.58.0",
+]
+
+[[package]]
+name = "wgpu-rs-demo"
+version = "1.0.0"
+dependencies = [
+ "bitcode",
+ "bytemuck",
+ "chrono",
+ "colored",
+ "env_logger",
+ "image",
+ "kira",
+ "mimalloc",
+ "pollster",
+ "rand 0.9.1",
+ "smol_str 0.3.2",
+ "wgpu",
+ "winit",
 ]
 
 [[package]]

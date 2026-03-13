@@ -8,20 +8,12 @@ use winit::{
     platform::scancode::PhysicalKeyExtScancode,
 };
 
-/// Universal event action (pressed/released) for both [MouseEvent] and [KeyEvent]
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Ord)]
 pub enum EventAction {
     Pressed,
     Released,
 }
 
-/// The mouse button that was pressed/released
-///
-/// SideFront and SideBack may not be present or consistent across all mice
-///
-/// Use [MouseButton::Other] for many-button mice
-///
-/// See [MouseEvent]
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Ord)]
 pub enum MouseButton {
     Left,
@@ -32,9 +24,6 @@ pub enum MouseButton {
     Other(u16),
 }
 
-/// Signifies the key location for keys that occur in multiple places on a keyboard, such as Shift, Alt or the number keys
-///
-/// See [KeyEvent]
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Ord)]
 pub enum KeyLocation {
     Left,
@@ -43,9 +32,6 @@ pub enum KeyLocation {
     Numpad,
 }
 
-/// Occurs on a mouse button press/release
-///
-/// See [EventAction], [MouseButton] and [crate::Node::on_mouse_event]
 #[derive(Debug, Clone, Copy)]
 pub struct MouseEvent {
     pub button: MouseButton,
@@ -53,7 +39,6 @@ pub struct MouseEvent {
 }
 
 impl MouseEvent {
-    /// Converts [winit] mouse press information into a single [crate::MouseEvent]
     pub(crate) fn from_winit_event(state: ElementState, button: winit::event::MouseButton) -> Self {
         let action = match state {
             ElementState::Pressed => EventAction::Pressed,
@@ -71,7 +56,6 @@ impl MouseEvent {
     }
 }
 
-/// Occurs on a keyboard button press/release
 #[derive(Debug, Clone)]
 pub struct KeyEvent {
     pub key: Option<SmolStr>,
@@ -83,7 +67,6 @@ pub struct KeyEvent {
 }
 
 impl KeyEvent {
-    /// Converts [winit] keystroke information into a single [crate::KeyEvent]
     pub(crate) fn from_winit_event(
         state: ElementState,
         winit_key_without_modifiers: Key<&str>,
