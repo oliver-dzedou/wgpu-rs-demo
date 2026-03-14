@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
@@ -12,65 +11,74 @@ use std::{
     time::Duration,
 };
 
-struct MyWorld {
-    triangle_positions: [Position; 3],
+struct Game {
     triangle_color: Color,
+    triangle_position: Position,
 }
 
-impl MyWorld {
+impl Game {
     pub fn new() -> Self {
         Self {
-            triangle_positions: [
-                Position::new(0.0, 0.5),
-                Position::new(-0.5, -0.5),
-                Position::new(0.5, -0.5),
-            ],
-            triangle_color: Color::from_linear(0.0, 0.0, 0.0),
-        }
-    }
-}
-
-impl Game for MyWorld {
-    fn init(&mut self, graphics: &mut Graphics, sound: &mut Sound, logger: &mut Logger) {
-        logger.set_log_level(LogLevel::INFO);
-    }
-
-    fn update(&mut self, graphics: &mut Graphics, sound: &mut Sound, logger: &mut Logger) {
-        graphics.draw_triangle(self.triangle_positions, self.triangle_color)
-    }
-
-    fn on_mouse_event(
-        &mut self,
-        graphics: &mut Graphics,
-        sound: &mut Sound,
-        logger: &mut Logger,
-        event: MouseEvent,
-    ) {
-    }
-
-    fn on_key_event(
-        &mut self,
-        graphics: &mut Graphics,
-        sound: &mut Sound,
-        logger: &mut Logger,
-        event: KeyEvent,
-    ) {
-        if event.key.as_ref().unwrap() == "q" {
-            self.triangle_color = Color::from_linear(0.1, 0.3, 0.5);
-        }
-        if event.key.as_ref().unwrap() == "w" {
-            self.triangle_color = Color::from_linear(0.0, 0.0, 0.0);
+            triangle_color: Color::from_linear(0.40, 0.61, 0.41, 1.0),
+            triangle_position: Position::new(0.0, 0.0),
         }
     }
 }
 
 fn main() {
-    let game = MyWorld::new();
-    let mut engine = Engine::new(game);
+    let mut game = Game::new();
+    let mut engine = Engine::new();
+
     engine.resizable = false;
     engine.decorations = true;
-    engine.window_title = String::from("Hello, World!");
+    engine.window_title = String::from("Hello, Triangle");
     engine.window_size = Size::new(1920, 1080);
     engine.vsync = VSync::On;
-    engine.start()
+
+    engine.clear_color = Color::from_linear(0.80, 0.14, 0.11, 1.0);
+
+    let base_triangle = [
+        Position::new(0.0, 0.1),
+        Position::new(-0.1, -0.1),
+        Position::new(0.1, -0.1),
+    ];
+
+    while engine.new_frame() {
+        for key in &engine.key_events {
+            if let Some(key_str) = key.logical_key.as_ref() {
+                if key.action == EventAction::Pressed {
+                    match key_str.as_str() {
+                        "w" => game.triangle_position.y += 0.05,
+                        "s" => game.triangle_position.y -= 0.05,
+                        "a" => game.triangle_position.x -= 0.05,
+                        "d" => game.triangle_position.x += 0.05,
+
+                        "j" => game.triangle_color = Color::from_linear(0.40, 0.61, 0.41, 1.0),
+                        "k" => game.triangle_color = Color::from_linear(0.84, 0.60, 0.13, 1.0),
+                        _ => {}
+                    }
+                }
+            }
+        }
+
+        engine.draw_triangle(
+            [
+                Position::new(
+                    base_triangle[0].x + game.triangle_position.x,
+                    base_triangle[0].y + game.triangle_position.y,
+                ),
+                Position::new(
+                    base_triangle[1].x + game.triangle_position.x,
+                    base_triangle[1].y + game.triangle_position.y,
+                ),
+                Position::new(
+                    base_triangle[2].x + game.triangle_position.x,
+                    base_triangle[2].y + game.triangle_position.y,
+                ),
+            ],
+            game.triangle_color,
+        );
+
+        engine.render();
+    }
 }
