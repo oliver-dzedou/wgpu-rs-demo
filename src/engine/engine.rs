@@ -1,18 +1,10 @@
 #![allow(unused_variables)]
 
-use std::{
-    cell::RefCell,
-    rc::Rc,
-    time::{Instant, Duration},
-    default,
-    ops::Range,
-    path::{Path, PathBuf},
-    sync::Arc,
-};
+use std::{time::Duration, ops::Range, path::Path, sync::Arc};
 use winit::{
     application::ApplicationHandler,
     event::{WindowEvent, ElementState},
-    event_loop::{ActiveEventLoop, ControlFlow, EventLoop},
+    event_loop::{ActiveEventLoop, EventLoop},
     platform::{
         modifier_supplement::KeyEventExtModifierSupplement,
         pump_events::{EventLoopExtPumpEvents, PumpStatus},
@@ -23,24 +15,16 @@ use winit::{
     platform::scancode::PhysicalKeyExtScancode,
 };
 use kira::{
-    effect::panning_control::PanningControlHandle,
-    sound::{PlaybackState, Sound},
-    Easing, Panning, StartTime, Tween,
+    Easing, StartTime, Tween,
     sound::static_sound::{StaticSoundHandle, StaticSoundData},
     AudioManager, AudioManagerSettings, DefaultBackend,
 };
 use wgpu::{
-    Adapter, BindGroupLayout, Buffer, CommandEncoder, Device, Instance, InstanceDescriptor, Queue,
-    RenderPass, RenderPipeline, Sampler, Surface, SurfaceConfiguration, SurfaceTexture,
-    TextureView, Trace, PresentMode,
+    Buffer, CommandEncoder, Device, Instance, InstanceDescriptor, Queue, RenderPass,
+    RenderPipeline, Surface, SurfaceConfiguration, SurfaceTexture, TextureView, Trace, PresentMode,
 };
-use std::{
-    str::FromStr,
-    fmt::{Display, Formatter, Result as std_Result},
-    io::{stdin, IsTerminal},
-};
+use std::{str::FromStr};
 use chrono::Local;
-use colored::{ColoredString, Colorize};
 use smol_str::{format_smolstr, ToSmolStr};
 use pollster::FutureExt;
 pub use smol_str::SmolStr;
@@ -508,8 +492,6 @@ fn log<M>(message: M) -> ()
 where
     M: AsRef<str>,
 {
-    use std::fmt::format;
-
     let formatted = format!(
         "{} :: {}",
         Local::now().format("%Y-%m-%d %H:%M:%S").to_string(),

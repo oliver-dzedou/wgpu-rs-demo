@@ -1,15 +1,7 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use bitcode::{Decode, Encode};
-use rand::Rng;
 use wgpu_rs_demo::*;
-use core::fmt;
-use std::{
-    path::{Path, PathBuf},
-    thread::sleep,
-    time::Duration,
-};
 
 struct Game {
     triangle_color: Color,

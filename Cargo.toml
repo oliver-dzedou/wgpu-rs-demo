@@ -8,13 +8,9 @@ winit = { version = "0.30.13", features = ["rwh_05"] }
 wgpu = "28.0.0"
 pollster = "0.4.0"
 bytemuck = { version = "1.25.0", features = [ "derive" ]}
-rand = "0.10.0"
 chrono = "0.4.44"
-colored = "3.1.1"
-bitcode = "0.6.9"
 kira = "0.12.0"
 env_logger = "0.11.9"
-image = { version = "0.25.10", features = ["png", "jpeg"] }
 smol_str = "0.3.6"
 
 [profile.release]
